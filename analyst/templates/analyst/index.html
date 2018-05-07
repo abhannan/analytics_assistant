@@ -1,0 +1,77 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <base href="/">
+    <title>Watson Assistant Chat App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta property="og:image" content="conversation.svg" />
+    <meta property="og:title" content="Conversation Chat Simple" />
+    <meta property="og:description" content="Sample application that shows how to use the Watson Assistant API to identify user intents" />
+        <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}">
+         <link rel="stylesheet" type="text/css" href="{% static "css/app.css" %}">
+        <link rel="stylesheet" type="text/css" href="{% static "css/base.css" %}">
+    <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+        <script
+      src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+      integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+      crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+        <script type="text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>
+         <script type="text/javascript" src="{% static "js/d3.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "js/Chart.min.js" %}"></script>
+</head>
+
+<body>
+<!--
+    <div id="view-change-button" class="button" onclick="PayloadPanel.togglePanel(event, this)">
+        <img class="option not-full" src="../../../static/img/Code Button.png" %}>
+        <img class="option full" src="../../../static/img/Chat Button.png" %}>
+    </div>
+-->
+ 
+    <div id="contentParent" class="responsive-columns-wrapper">
+        <!-- Deals with the chat window. --> 
+        <div id="chat-column-holder" class="responsive-column content-column">
+            <div class="chat-column">
+                <div id="scrollingChat"></div>
+                <label for="textInput" class="inputOutline">
+                    
+          <input id="textInput" class="input responsive-column"
+            placeholder="Ask something" type="text"
+            onkeydown="ConversationPanel.inputKeyDown(event, this)">
+        </label>
+            </div>
+        </div>
+        <!-- Deals with the payload window. -->    
+        <div id="payload-column" class="fixed-column content-column">
+            <div id="payload-initial-message">
+                Type something to see the output
+            </div>
+            <div id="payload-request" class="payload"></div>
+            <div id="payload-response" class="payload"></div>
+        </div> 
+        
+        <div id="output-column-wrapper">
+            <div class="panel-header">
+                <div class="panel-title">Notebook</div>
+            </div>
+            <div id="output-column-body"></div>
+        </div>
+        
+    </div>
+
+    <script type="text/javascript" src="{% static "js/common.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/api.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/conversation.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/payload.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/global.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/base.js" %}"></script> 
+
+</body>
+
+</html>

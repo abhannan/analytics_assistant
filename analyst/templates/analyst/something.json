@@ -1,0 +1,96 @@
+{
+    'intents': [],
+    'entities': [{
+        'entity': 'outputtype',
+        'location': [0, 5],
+        'value': 'table',
+        'confidence': 1
+    }],
+    'input': {
+        'text': 'table'
+    },
+    'output': {
+        'text': ['There you go.'],
+        'nodes_visited': ['node_28_1524934330994'],
+        'action': {
+            'period': 'multi',
+            'request_type': 'get_financials'
+        },
+        'log_messages': []
+    },
+    'context': {
+        'conversation_id': '5f2491da-8bfe-4f85-b93a-9452ef9b58c8',
+        'system': {
+            '_node_output_map': {
+                'Welcome': [0],
+                'node_1_1524608803734': [0],
+                'node_8_1524597367966': [0],
+                'node_28_1524934330994': [0]
+            },
+            'dialog_turn_counter': 4,
+            'dialog_stack': [{
+                'dialog_node': 'root'
+            }],
+            'dialog_request_counter': 4,
+            'branch_exited': True,
+            'branch_exited_reason': 'completed'
+        },
+        'start_year': 1,
+        'end_year': 1,
+        'year': 2,
+        'end_month': 5,
+        'start_month': 1,
+        'month': 1,
+        'output_type': 'table'
+    }
+}
+
+
+
+
+
+
+
+
+
+{
+    "context": {},
+    "output": {
+        "text": {
+            "values": [
+        "Sure, here it is."
+      ],
+            "selection_policy": "sequential"
+        },
+        "action": {
+            "to": "$to",
+            "from": "$from",
+            "year0": "@year[0]",
+            "year1": "@year[1]",
+            "month0": "@month[0]",
+            "month1": "@month[1]"
+        }
+    }
+}
+
+"<? input.text ?>"
+    "start_month": "<? (@month == null)? 'yes' : 'no' ?>",
+
+
+{
+  "context": {
+    "end_year": "<? (@year.length >1)? @year[1] : @year[0] ?>",
+    "end_month": "<? (@month.length >1)? @month[1] : @month[0] ?>",
+    "start_year": "@year[0]",
+    "start_month": "@month[0]",
+    "element_type": "@financial_category"
+  },
+  "output": {
+    "text": {
+      "values": [
+        "And how would you like, graph or table?"
+      ],
+      "selection_policy": "random"
+    }
+  }
+}
