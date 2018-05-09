@@ -23,26 +23,29 @@
     width: 60vw;
     height: 90vh;
     overflow: auto;
+    background-color: #E8E9E9;
 }
 
 .output-svg-wrapper {
     width: 95%;
     height: 300px;
+    width: 740px;
     box-shadow: 5px 5px 5px #999;
     border-radius: 10px 10px 10px 10px;
     margin-bottom: 10px;
-    margin-top: 10px;
     margin-left: 10px;
 }
 
 .output-table-wrapper {
-    width: 95%;
+    width: 740px;
     height: 300px;
     overflow: auto;
     box-shadow: 5px 5px 5px #999;
+    border-radius: 0px 0px 10px 10px;
     margin-bottom: 5px;
     margin-left: 10px;
     text-align: center;
+    background-color: white;
 }
 
 .panel-title-table {
@@ -52,10 +55,10 @@
     align-items: center;
     font-size: 15px;
     color: white;
-    background-color: #2D4458;
-    width: 95%;
+    background-color: #4B5354;
+    width: 740px;
     margin-left: 10px;
-    border-radius: 2px 2px 0 0;
+    border-radius: 5px 5px 0 0;
 }
 
 .card {
@@ -63,7 +66,7 @@
     margin-top: 5px;
     margin-bottom: 5px;
     margin-left: 10px;
-    width: 95%;
+    width: 740px;
 }
 
 .bar {
@@ -81,5 +84,11 @@
 }
 
 .barRasmCasm:hover {
-  opacity: 0.6;
+    opacity: 0.6;
+}
+
+.d3-barChart {
+    background-color: white;
+    box-shadow: 5px 5px 5px #999;
+    border-radius: 0px 0px 10px 10px;
 }

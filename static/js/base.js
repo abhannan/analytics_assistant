@@ -60,6 +60,8 @@ function getActionableInfo(result) {
                     singlePeriodComparisonForMultipleMonths(actionableOutput)
                 }
             }
+        } else if (actionableOutput.output.action.request_type === 'get_calendar') {
+            calendarUpdates(actionableOutput)
         }
     }
 }
@@ -242,7 +244,7 @@ function graphForMultiplePeriod(actionableOutput) {
             var svg = d3.select(barChart),
                 margin = {
                     top: 20,
-                    right: 30,
+                    right: 10,
                     bottom: 30,
                     left: 10
                 };
@@ -324,7 +326,7 @@ function graphForMultiplePeriod(actionableOutput) {
                 .text("Total: " + (String(totalValue.toLocaleString('en'))))
                 .attr("class", "totalValue")
                 .attr("x", 600)
-                .attr("y", 12)
+                .attr("y", 15)
                 .attr("fill", "#975AD1")
                 .attr("font-weight", "bold");
 
@@ -394,11 +396,9 @@ function multiPeriodComparison(actionableOutput) {
                 return a
             }, {}))
 
-            console.log(transposedData)
-
             // Create the SVG
             var comparisonGraphNode = document.createElement('div');
-            comparisonGraphNode.className = "comparison-svg-wrapper";
+            comparisonGraphNode.className = "output-svg-wrapper";
             var panelTitle = document.createElement('div');
             panelTitle.className = "panel-title-table";
             var comparisonChart = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -641,6 +641,104 @@ function singlePeriodComparisonForMultipleMonths(actionableOutput) {
             comparisonCardBody.appendChild(comparisonCardText);
             comparisonCardNode.appendChild(comparisonCardBody);
             notebookElement.appendChild(comparisonCardNode);
+
+            $(notebookElement).animate({
+                scrollTop: document.body.scrollHeight
+            }, "slow");
+
+        },
+        error: function (error_data) {
+            console.log("error")
+            console.log(error_data)
+        }
+    })
+}
+
+
+function calendarUpdates(actionableOutput) {
+    $.ajax({
+        url: "calendar_assistant/events",
+        method: 'GET',
+        data: {
+            startDateTime: actionableOutput.context.startDate,
+            endDateTime: actionableOutput.context.endDate,
+        },
+        success: function (data) {
+
+            console.log(data)
+
+            // Select notebook and creat table into it
+            var newNode = document.createElement('div');
+            newNode.className = "output-table-wrapper";
+
+            var panelTitle = document.createElement('div');
+            panelTitle.className = "panel-title-table";
+
+            var table = document.createElement('table');
+            table.setAttribute("class", "table table-striped")
+            table.setAttribute("id", "output-table")
+            var tableBody = document.createElement('tbody');
+            var th = document.createElement("th")
+            tableBody.appendChild(th);
+            th.appendChild(document.createTextNode("Event"));
+            var th = document.createElement("th")
+            tableBody.appendChild(th);
+            th.appendChild(document.createTextNode("Date"));
+            var th = document.createElement("th")
+            tableBody.appendChild(th);
+            th.appendChild(document.createTextNode("Start Time"));
+            var th = document.createElement("th")
+            tableBody.appendChild(th);
+            th.appendChild(document.createTextNode("End Time"));
+            var th = document.createElement("th")
+            tableBody.appendChild(th);
+            th.appendChild(document.createTextNode("Location"));
+
+            for (var i = 0; i < data.length; i++) {
+                var record = data[i];
+                
+                var startDate = new Date(record.start.dateTime);
+                var locale = "en-us";
+                var month = startDate.toLocaleString(locale, { month: "long" });
+                var date = startDate.getDate();
+                
+                var startHour = startDate.getHours();
+                var startMinute = startDate.getMinutes();
+                
+                var endDate = new Date(record.end.dateTime);
+                
+                var endHour = endDate.getHours();
+                var endMinute = endDate.getMinutes();
+
+                table.appendChild(tableBody);
+                var tr = document.createElement('tr');
+                tableBody.appendChild(tr);
+                
+                var eventColumn = document.createElement('td');
+                var dateColumn = document.createElement('td');
+                var startTimeColumn = document.createElement('td');
+                var endTimeColumn = document.createElement('td');
+                var locationColumn = document.createElement('td');
+                
+                eventColumn.appendChild(document.createTextNode(record.subject));
+                dateColumn.appendChild(document.createTextNode(date + " " + month));
+                startTimeColumn.appendChild(document.createTextNode(startHour + ":" + startMinute));
+                endTimeColumn.appendChild(document.createTextNode(endHour + ":" + endMinute));
+                locationColumn.appendChild(document.createTextNode(record.location.displayName));
+                
+                tr.appendChild(eventColumn);
+                tr.appendChild(dateColumn);
+                tr.appendChild(startTimeColumn);
+                tr.appendChild(endTimeColumn);
+                tr.appendChild(locationColumn);
+            }
+            
+            
+            panelTitle.innerHTML = "Calendar"
+
+            newNode.appendChild(table);
+            notebookElement.appendChild(panelTitle);
+            notebookElement.appendChild(newNode);
 
             $(notebookElement).animate({
                 scrollTop: document.body.scrollHeight

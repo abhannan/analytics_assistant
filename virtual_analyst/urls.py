@@ -19,4 +19,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('analyst.urls')),
+    path(r'calendar_assistant/', include('calendar_assistant.urls', namespace='calendar_assistant')),
 ]
